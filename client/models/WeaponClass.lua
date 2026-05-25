@@ -473,13 +473,14 @@ local Weapon <const> = LIB.Class:Create({
 				self.components[category] = nil
 				if NON_REPLACEABLE_COMPONENTS[component] or NON_REPLACEABLE_CATEGORIES[category] then
 					RemoveWeaponComponentFromPed(CACHE.Ped, joaat(component), joaat(self.name))
-
+					--? needs to be documented official vorp event
 					TriggerEvent("vorp_inventory:componentRemoved", self.id, component, category)
 				else
 					-- add default component for this weapon because we cannot leave it without a component
 					local defaultComponents <const> = self.defaultAttachments[category]
 					if defaultComponents then
 						GiveWeaponComponentToEntity(CACHE.Ped, joaat(defaultComponents), joaat(self.name), true)
+						--? needs to be documented official vorp event
 						TriggerEvent("vorp_inventory:componentAdded", self.id, defaultComponents, category)
 					end
 				end
@@ -493,7 +494,7 @@ local Weapon <const> = LIB.Class:Create({
 			if not CONFIG.USE_WEAPON_COMPONENTS then return end
 			self.components[category] = component
 			GiveWeaponComponentToEntity(CACHE.Ped, joaat(component), joaat(self.name), true)
-
+			--? needs to be documented official vorp event
 			TriggerEvent("vorp_inventory:componentAdded", self.id, component, category)
 		end,
 

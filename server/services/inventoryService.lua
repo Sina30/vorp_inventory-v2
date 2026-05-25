@@ -3126,7 +3126,7 @@ CreateThread(function()
 	--AMMO IS ONLY UPDATED WHEN DATA HAVE CHANGED (TO AVOID UNNECESSARY UPDATES)
 	local updateTimer <const> = 10000 -- every 10 seconds
 
-	LIB.SetInterval(function(self)
+	LIB.SetInterval(function()
 		local function updateAmmo()
 			for _, value in pairs(USERS_AMMO_DATA) do
 				local charId <const> = value.charidentifier

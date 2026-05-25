@@ -760,7 +760,7 @@ else
                 end
 
                 local weaponUsed <const> = getWeapon()
-                if weaponUsed > 0 then
+                if weaponUsed ~= 0 then
                     local weaponId <const> = UTILS.INVENTORY.GET_WEAPON_ID(weaponUsed)
                     if weaponId > 0 then
                         local weapon <const> = PLAYER_INVENTORY.WEAPONS[weaponId]
