@@ -397,7 +397,7 @@ local InventoryService <const> = {
 				return
 			end
 
-			if not SV_UTILS.PROCESS.USER_IN_PROCESSING(_source) then return end
+			if SV_UTILS.PROCESS.USER_IN_PROCESSING(_source) then return end
 			SV_UTILS.PROCESS.ADD_USER(_source)
 
 			INVENTORY_SERVICE.GIVE.WEAPON_TARGET(target, weaponId, _source)
