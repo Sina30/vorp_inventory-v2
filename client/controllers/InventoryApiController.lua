@@ -6,7 +6,9 @@ RegisterNetEvent("vorpCoreClient:subWeapon", INVENTORY_API_SERVICE.SUB_WEAPON)
 RegisterNetEvent("vorpCoreClient:subBullets", INVENTORY_API_SERVICE.SUB_WEAPON_BULLETS)
 
 RegisterNetEvent("vorp_inventory:addComponent", INVENTORY_API_SERVICE.ADD_COMPONENT)
+RegisterNetEvent("vorp_inventory:addComponents", INVENTORY_API_SERVICE.ADD_COMPONENTS)
 RegisterNetEvent("vorp_inventory:subComponent", INVENTORY_API_SERVICE.SUB_COMPONENT)
+RegisterNetEvent("vorp_inventory:subComponents", INVENTORY_API_SERVICE.SUB_COMPONENTS)
 RegisterNetEvent("vorp_inventory:SetItemMetadata", INVENTORY_API_SERVICE.SET_ITEM_METADATA)
 RegisterNetEvent("vorp_inventory:SetItemDurability", INVENTORY_API_SERVICE.SET_ITEM_DURABILITY)
 

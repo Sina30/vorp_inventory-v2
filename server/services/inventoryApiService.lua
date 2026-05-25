@@ -1094,6 +1094,19 @@ local InventoryAPI = {
 
 			return respond(cb, true)
 		end,
+		ADD_WEAPON_COMPONENTS = function(source, weaponId, components, cb)
+			local _source <const> = source
+			local userWeapons <const> = USERS_WEAPONS.default[weaponId]
+			if not userWeapons then return respond(cb, false) end
+
+			for component, category in pairs(components) do
+				userWeapons:addComponent(component, category) -- updates database
+			end
+
+			TriggerClientEvent("vorp_inventory:addComponents", _source, weaponId, components)
+
+			return respond(cb, true)
+		end,
 
 		REMOVE_WEAPON_COMPONENT = function(source, weaponId, component, category, cb)
 			local _source <const> = source
@@ -1103,6 +1116,17 @@ local InventoryAPI = {
 			userWeapons:removeComponent(component, category) -- updates database
 			TriggerClientEvent("vorp_inventory:subComponent", _source, weaponId, component, category)
 			return respond(cb, true)
+		end,
+
+		REMOVE_WEAPON_COMPONENTS = function(source, weaponId, components, cb)
+			local _source <const> = source
+			local userWeapons <const> = USERS_WEAPONS.default[weaponId]
+			if not userWeapons then return respond(cb, false) end
+
+			for component, category in pairs(components) do
+				userWeapons:removeComponent(component, category)
+			end
+			TriggerClientEvent("vorp_inventory:subComponents", _source, weaponId, components)
 		end,
 
 		SET_WEAPON_CUSTOM_LABEL = function(source, weaponId, label, cb)
@@ -2024,7 +2048,9 @@ exports("addBullets", INVENTORY_API.MAIN.ADD_AMMO_TO_GUNBELT)
 exports("subBullets", InventoryAPI.MAIN.REMOVE_WEAPON_BULLETS)
 exports("canCarryWeapons", INVENTORY_API.MAIN.CAN_CARRY_WEAPON)
 exports("addWeaponComponent", INVENTORY_API.MAIN.ADD_WEAPON_COMPONENT)
+exports("addWeaponComponents", INVENTORY_API.MAIN.ADD_WEAPON_COMPONENTS)
 exports("subWeaponComponent", INVENTORY_API.MAIN.REMOVE_WEAPON_COMPONENT)
+exports("subWeaponComponents", INVENTORY_API.MAIN.REMOVE_WEAPON_COMPONENTS)
 exports("setWeaponCustomLabel", INVENTORY_API.MAIN.SET_WEAPON_CUSTOM_LABEL)
 exports("setWeaponSerialNumber", INVENTORY_API.MAIN.SET_WEAPON_CUSTOM_SERIAL_NUMBER)
 exports("setWeaponCustomDesc", INVENTORY_API.MAIN.SET_WEAPON_CUSTOM_DESCRIPTION)

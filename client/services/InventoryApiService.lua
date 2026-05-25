@@ -70,12 +70,29 @@ local InventoryApi = {
         weapon:addComponent(component, category)
         NUI_SERVICE.INVENTORY.UPDATE_WEAPON(weaponId)
     end,
+    ADD_COMPONENTS = function(weaponId, components)
+        local weapon <const> = PLAYER_INVENTORY.WEAPONS[weaponId]
+        if not weapon then return end
+        for component, category in pairs(components) do
+            weapon:addComponent(component, category)
+        end
+        NUI_SERVICE.INVENTORY.UPDATE_WEAPON(weaponId)
+    end,
 
     SUB_COMPONENT = function(weaponId, component, category)
         local weapon <const> = PLAYER_INVENTORY.WEAPONS[weaponId]
         if not weapon then return end
 
         weapon:removeComponent(component, category)
+        NUI_SERVICE.INVENTORY.UPDATE_WEAPON(weaponId)
+    end,
+
+    SUB_COMPONENTS = function(weaponId, components)
+        local weapon <const> = PLAYER_INVENTORY.WEAPONS[weaponId]
+        if not weapon then return end
+        for component, category in pairs(components) do
+            weapon:removeComponent(component, category)
+        end
         NUI_SERVICE.INVENTORY.UPDATE_WEAPON(weaponId)
     end,
 }
