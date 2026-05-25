@@ -113,7 +113,7 @@ local function useWeapon(data)
 
 		TriggerServerEvent("syn_weapons:weaponused", data)
 		local isDual = true
-		TriggerEvent("vorp_inventory:onWeaponEquipped", weapon:getComponents(), weaponId, weapon:getName(), isDual)
+		TriggerEvent("vorp_inventory:onWeaponEquipped", weapon:getAllComponents(), weaponId, weapon:getName(), isDual, weapon.defaultAttachments)
 	else
 		weapon:equipwep()
 		if not isThrowable and not isMelee then
@@ -128,7 +128,7 @@ local function useWeapon(data)
 
 		TriggerServerEvent("syn_weapons:weaponused", data)
 		local isDual = false
-		TriggerEvent("vorp_inventory:onWeaponEquipped", weapon:getComponents(), weaponId, weapon:getName(), isDual)
+		TriggerEvent("vorp_inventory:onWeaponEquipped", weapon:getAllComponents(), weaponId, weapon:getName(), isDual, weapon.defaultAttachments)
 	end
 
 	if weapon:getUsed() then
