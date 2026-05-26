@@ -1454,7 +1454,7 @@ local InventoryAPI = {
 				}
 				table.insert(playerItems, newItem)
 			end
-			respond(cb, playerItems)
+			return respond(cb, playerItems)
 		end,
 
 		REMOVE_WEAPON = function(source, weaponId, cb)
