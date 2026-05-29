@@ -653,10 +653,12 @@ else
                 local ammoName <const> = SHARED_DATA.AMMO_TYPE_HASH[ammoType]
                 if not ammoName then
                     local weaponType = ammoType
+                    local weaponName <const> = GetWeaponName(weaponType)
+                    local weaponLabel <const> = SHARED_DATA.WEAPONS[weaponName]?.Name or weaponName
                     SetPedAmmo(CACHE.Ped, weaponType, 0)
                     RemoveWeaponFromPed(CACHE.Ped, weaponType, true, 0)
-                    TriggerServerEvent("vorpinventory:pickUpThrowableWeapon", GetWeaponName(weaponType))
-                    CORE.NotifyRightTip("You picked up a " .. GetWeaponName(weaponType), 4000)
+                    TriggerServerEvent("vorpinventory:pickUpThrowableWeapon", weaponName)
+                    CORE.NotifyRightTip("You picked up a " .. weaponLabel, 4000)
                     return
                 else
                     local knivesAmmo = { [`AMMO_THROWING_KNIVES`] = true }
