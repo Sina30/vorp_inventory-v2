@@ -782,7 +782,7 @@ else
                 if not CACHE.IsDead and not IS_INV_OPEN and lassos[CACHE.Weapon] then
                     sleep = 500
                     local lassoTarget <const> = GetLassoTarget(CACHE.Ped)
-                    if lassoTarget ~= 0 and (IsPedAPlayer(lassoTarget) or IsPedHuman(lassoTarget) == 1) then
+                    if lassoTarget ~= 0 and (IsPedAPlayer(lassoTarget) == 1 or IsPedHuman(lassoTarget) == 1) then
                         local isLassoed <const> = IsPedLassoed(lassoTarget) == 1
                         if isLassoed then
                             repeat
@@ -812,7 +812,7 @@ else
                         if isFreeAiming then
                             sleep = 500
                             local retval <const>, entity <const> = GetEntityPlayerIsFreeAimingAt(CACHE.Player)
-                            if retval and (IsPedHuman(entity) == 1 or IsPedAPlayer(entity)) then
+                            if retval and (IsPedHuman(entity) == 1 or IsPedAPlayer(entity) == 1) then
                                 repeat
                                     Wait(0)
                                     local isHogtying <const> = IsPedBeingHogtied(entity) ~= 0
