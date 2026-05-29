@@ -178,18 +178,34 @@ local inventory <const> = {
 			end
 		end
 		Wait(2000)
-		-- need another loop because of get status method
-		for _, weapon in pairs(PLAYER_INVENTORY.WEAPONS) do
-			if CONFIG.USE_WEAPON_DEGRADATION and (weapon:getUsed() or weapon:getUsed2()) then
-				local payload = {
-					degradation = weapon.degradation,
-					damage = weapon.damage,
-					dirt = weapon.dirt,
-					soot = weapon.soot,
-				}
 
-				LAST_CLIENT_WEAPON_STATUS[weapon:getId()] = json.encode(payload)
+		if CONFIG.USE_WEAPON_DEGRADATION then
+			-- need another loop because of get status method
+			local weaponsToSetStatus <const> = {}
+			for _, weapon in pairs(PLAYER_INVENTORY.WEAPONS) do
+				if (weapon:getUsed() or weapon:getUsed2()) then
+					local payload = {
+						degradation = weapon.degradation,
+						damage = weapon.damage,
+						dirt = weapon.dirt,
+						soot = weapon.soot,
+					}
+					LAST_CLIENT_WEAPON_STATUS[weapon:getId()] = json.encode(payload)
+					table.insert(weaponsToSetStatus, weapon:getId())
+				end
 			end
+
+			SetTimeout(4000, function()
+				-- somehow we need to wait 2000 is not enough
+				for _, weaponId in pairs(weaponsToSetStatus) do
+					Wait(500)
+					local weapon <const> = PLAYER_INVENTORY.WEAPONS[weaponId]
+					if weapon then
+						weapon:setStatus()
+					end
+				end
+				table.wipe(weaponsToSetStatus)
+			end)
 		end
 
 		HidePedWeapons(CACHE.Ped, 2, true)
