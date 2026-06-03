@@ -72,6 +72,18 @@
                     <span class="mainButton-craft__icon" aria-hidden="true"></span>
                     <span class="mainButton-craft__label">Craft</span>
                 </button>
+                <button class="mainButton mainButton-toolbar mainButton-sort" type="button" id="inventorySortBtn"
+                    title="Sort" aria-label="Sort" aria-expanded="false">
+                    <span class="mainButton-sort__icon" aria-hidden="true"></span>
+                    <span class="mainButton-sort__label">Sort</span>
+                </button>
+                <div id="sortConfirmPopup" style="display:none; position:absolute; top:3vh; right:0; z-index:20000; padding:1.2vh 1vw; text-align:center; width:6vw;">
+                    <p style="font-family:'crock',serif; font-size:0.6vw; color:#f5f0e6; margin:0 0 0.8vh;">Sort inventory?</p>
+                    <div style="display:flex; gap:0.4vw; justify-content:center;">
+                        <button type="button" id="sortConfirmYes" style="font-family:'crock',serif; font-size:0.55vw; color:#f5f0e6; background:transparent; border:1px solid rgba(245,240,230,0.4); padding:0.3vh 0.5vw; float:none; border-radius:2px;">Yes</button>
+                        <button type="button" id="sortConfirmNo" style="font-family:'crock',serif; font-size:0.55vw; color:#f5f0e6; background:transparent; border:1px solid rgba(245,240,230,0.4); padding:0.3vh 0.5vw; float:none; border-radius:2px;">No</button>
+                    </div>
+                </div>
             </div>
             <button class="mainButton mainButton-close" type="button" id="close" title="Close" aria-label="Close">
                 <span class="mainButton-close__icon" aria-hidden="true"></span>

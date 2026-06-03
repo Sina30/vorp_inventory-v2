@@ -94,6 +94,8 @@ CONFIG.INVENTORY_UI = {
 
 	SADDLE_BUTTON = true,              -- enables saddle inventory button
 
+	SORT_BUTTON = true,              -- enables sort inventory button
+
 }
 
 --CAN ONLY USE HOTBAR IF PRESSING ALT AND HOLD so you can keep using the 1 2 3 4 5 keys normally while not holding ALT

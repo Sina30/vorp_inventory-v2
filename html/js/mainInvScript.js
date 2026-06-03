@@ -263,6 +263,34 @@ INVENTORY.MAIN = {
         },
     },
 
+    AUTO_SORT: function () {
+        const allItems = Object.values(mainInventoryItemsCache);
+
+        allItems.sort(function (a, b) {
+            const isWeaponA = a.type === "item_weapon";
+            const isWeaponB = b.type === "item_weapon";
+
+            if (isWeaponA !== isWeaponB) {
+                if (Config.InvOrder === "items") {
+                    return isWeaponA ? 1 : -1; // items first, weapons last
+                } else {
+                    return isWeaponA ? -1 : 1; // weapons first, items last
+                }
+            }
+
+            const labelA = (a.custom_label || a.label || a.name || "").toLowerCase();
+            const labelB = (b.custom_label || b.label || b.name || "").toLowerCase();
+            return labelA.localeCompare(labelB);
+        });
+
+        mainInventoryLayoutCache = null;
+
+        INVENTORY.MAIN.INVENTORY_SETUP(allItems, {});
+        INVENTORY.MAIN.CLEAR_INV_SORT();
+        INVENTORY.MAIN.INIT_INV_SORT();
+        INVENTORY.MAIN.QUEUE_LAYOUT_SAVE();
+    },
+
     IS_MAIN_CAT_STRIP: function (container) {
         return !!(container && container.classList && container.classList.contains('mainButton1') && container.closest('.item-groups-rail'));
     },
@@ -2360,6 +2388,20 @@ $("document").ready(function () {
         INVENTORY.CLOSE();
     });
 
+    $(document).on("click", "#inventorySortBtn", function () {
+        if (type !== "main") return;
+        $("#sortConfirmPopup").toggle();
+    });
+
+    $(document).on("click", "#sortConfirmYes", function () {
+        $("#sortConfirmPopup").hide();
+        INVENTORY.MAIN.AUTO_SORT();
+    });
+
+    $(document).on("click", "#sortConfirmNo", function () {
+        $("#sortConfirmPopup").hide();
+    });
+
     $("#inventorySaddleBtn").on("click", function (ev) {
         if (ev) {
             ev.preventDefault();
@@ -2460,6 +2502,8 @@ $("document").ready(function () {
             Config.EnableHandCraftButton = LuaConfig.EnableHandCraftButton;
             Config.EnableSaddleButton = LuaConfig.EnableSaddleButton;
             Config.EnableWeaponAttachments = LuaConfig.EnableWeaponAttachments;
+            Config.EnableSortButton = LuaConfig.EnableSortButton;
+            Config.InvOrder = LuaConfig.InvOrder;
             Config.HotbarAllow = LuaConfig.HotbarAllow;
             Config.ItemRaritySlotStyle = LuaConfig.ItemRaritySlotStyle ?? Config.ItemRaritySlotStyle;
             if (LuaConfig.TooltipPlacement) {
@@ -2474,6 +2518,7 @@ $("document").ready(function () {
             $("#handCraftingOpenBtn").toggle(!!Config.EnableHandCraftButton);
             $("#inventorySaddleBtn").toggle(!!Config.EnableSaddleButton);
             $("#weaponAttachmentsOpenBtn").toggle(Config.EnableWeaponAttachments);
+            $("#inventorySortBtn").toggle(!!Config.EnableSortButton);
             if (!Config.EnableHandCraftButton && Config.EnableSaddleButton) {
                 $("#inventorySaddleBtn").css("margin-left", "3.5vw");
             } else {
@@ -2546,6 +2591,7 @@ $("document").ready(function () {
             $("#handCraftingOpenBtn").prop("disabled", type !== "main" || !Config.EnableHandCraftButton);
             $("#inventorySaddleBtn").prop("disabled", type !== "main" || !Config.EnableSaddleButton);
             $("#weaponAttachmentsOpenBtn").prop("disabled", type !== "main" || Config.EnableWeaponAttachments !== true);
+            $("#inventorySortBtn").prop("disabled", type !== "main");
             HOTBAR.VISIBILITY.REFRESH();
             stopTooltip = false;
             INVENTORY.MAIN.MOVE_INVENTORY_HUD("main");
@@ -2674,6 +2720,7 @@ $("document").ready(function () {
             $("#inv-controls-hint").fadeOut(150);
             $(".controls").fadeOut();
             $(".site-cm-box").remove();
+            $("#sortConfirmPopup").hide();
             dialog.close();
             stopTooltip = true;
         } else if (event.data.action == "setItems") {

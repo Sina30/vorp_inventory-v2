@@ -948,6 +948,8 @@ local nuiService = {
 					TooltipPlacement = CONFIG.INVENTORY_UI.TOOLTIP_PLACEMENT,
 					EnableHandCraftButton = CONFIG.INVENTORY_UI.HAND_CRAFT_BUTTON,
 					EnableSaddleButton = CONFIG.INVENTORY_UI.SADDLE_BUTTON,
+					EnableSortButton = CONFIG.INVENTORY_UI.SORT_BUTTON,
+					InvOrder = CONFIG.INV_ORDER,
 					MainInventoryFixedSlotCount = CONFIG.INVENTORY_UI.MAIN_INVENTORY_FIXED_SLOT_COUNT,
 					EnableWeaponAttachments = CONFIG.USE_WEAPON_COMPONENTS,
 				}
